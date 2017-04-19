@@ -8,6 +8,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,9 +18,13 @@ import javafx.collections.ObservableList;
  */
 public class WoordenRepository {
     private List<String> woorden;
-
+    private List<String> gebruikteWoorden;
+    private final Random randomGenerator;
+    
     public WoordenRepository() {
         generateStandaardList();
+        randomGenerator = new Random();
+        gebruikteWoorden = new ArrayList<>();
     }
 
     private void generateStandaardList() {
@@ -37,5 +42,27 @@ public class WoordenRepository {
     
     public ObservableList<String> getWoorden(){
         return FXCollections.observableArrayList(woorden);
+    }
+    
+    public String geefVolgendWoord(){
+        if(woorden.isEmpty()){
+            throw new ArrayIndexOutOfBoundsException("Woordenlijst is leeg.");
+        }
+        int index = randomGenerator.nextInt(woorden.size());
+        String gekozen =  woorden.remove(index);
+        gebruikteWoorden.add(gekozen);
+        return gekozen;
+    }
+    
+    public void resetLijsten(){
+        woorden.addAll(gebruikteWoorden);
+    }
+    
+    public void voegWoordToe(String s){
+        woorden.add(s);
+    }
+    
+    public void verwijderWoord(String s){
+        woorden.remove(s);
     }
 }

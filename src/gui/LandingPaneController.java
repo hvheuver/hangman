@@ -37,7 +37,7 @@ public class LandingPaneController extends GridPane {
             loader.load();
             this.domeincontroller = domeincontroller;
         } catch (IOException ex) {
-            Logger.getLogger(LandingPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
