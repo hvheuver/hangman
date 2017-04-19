@@ -74,6 +74,7 @@ public class HangmanPanelController extends GridPane {
 
     @FXML
     private void gaNaarVolgendWoord(ActionEvent event) {
+        startGame();
     }
 
     private void processAction(String stringchar) {
@@ -85,16 +86,12 @@ public class HangmanPanelController extends GridPane {
             System.out.println("Wrong! Hangman update");
         }
         switch(domeincontroller.checkWinOfVerlies()){
-            case 0 :{
-                System.out.println("Continue..");
-                break;
-            }
             case 1 : {
-                System.out.println("Winner!");
+                endgame(true);
                 break;
             }
             case 2: {
-                System.out.println("Lost!");
+                endgame(false);
                 break;
             }
         }
@@ -114,5 +111,15 @@ public class HangmanPanelController extends GridPane {
     private void startGame() {
         domeincontroller.geefVolgendWoord();
         hangmanLabel.setText(domeincontroller.geefHangmanWoord());
+    }
+    
+    private void endgame(boolean win){
+        Label label;
+        if(win){
+            label = new Label("Win!");
+        } else{
+            label = new Label("Lost!");
+        }
+        buttonContainer.getChildren().setAll(label);
     }
 }
