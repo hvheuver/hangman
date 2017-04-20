@@ -102,4 +102,18 @@ public class Domeincontroller {
     public String geefDefinitie() {
         return currentWoordObject.getDefinitie();
     }
+
+    public int getScore() {
+        //todo
+        return 0;
+    }
+
+    public int getMaxScore() {
+        //todo
+        return 0;
+    }
+
+    public void resetGame() {
+        woordenRepo.resetLijsten();
+    }
 }

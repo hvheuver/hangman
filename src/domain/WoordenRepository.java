@@ -56,6 +56,7 @@ public class WoordenRepository {
     
     public void resetLijsten(){
         woorden.addAll(gebruikteWoorden);
+        gebruikteWoorden = new ArrayList<>();
     }
     
     public void voegWoordToe(String woord, String definitie, String vertaling){

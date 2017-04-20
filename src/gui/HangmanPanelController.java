@@ -7,12 +7,16 @@ package gui;
 
 import domain.Domeincontroller;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -23,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -126,7 +131,11 @@ public class HangmanPanelController extends GridPane {
     }
 
     private void startGame() {
-        domeincontroller.geefVolgendWoord();
+        try {
+            domeincontroller.geefVolgendWoord();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            toonEindscherm();
+        }
         //remove and generate
         updateVertaling("");
         updateWoord("");
@@ -168,5 +177,16 @@ public class HangmanPanelController extends GridPane {
 
     private void updateVertaling(String vertaling) {
         vertalingLabel.setText("Traduction: " + vertaling);
+    }
+
+    private void toonEindscherm() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Oei de woordjes zijn op.");
+        alert.setContentText("Uw eindscore is " + domeincontroller.getScore() + " van de maximale " + domeincontroller.getMaxScore());
+        alert.showAndWait();
+        //back to landing
+        domeincontroller.resetGame();
+        Stage s = (Stage) this.getScene().getWindow();
+        s.setScene(new Scene(new LandingPaneController(domeincontroller)));
     }
 }
