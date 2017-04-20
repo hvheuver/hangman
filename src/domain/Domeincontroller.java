@@ -14,18 +14,21 @@ import javafx.collections.ObservableList;
  */
 public class Domeincontroller {
 
-    private WoordenRepository woordenRepo;
+    private final WoordenRepository woordenRepo;
+    private Woord currentWoordObject;
     private String currentWoord;
     private char[] hangmanWoord;
     private int beurten;
     private final int MAX_BEURTEN;
+    
+    //geen echte domeincontroller but whatever.
     public Domeincontroller() {
         woordenRepo = new WoordenRepository();
         beurten = 0;
         MAX_BEURTEN = 7; //aanpassen aan aantal images
     }
 
-    public ObservableList<String> getWoorden() {
+    public ObservableList<Woord> getWoorden() {
         return woordenRepo.getWoorden();
     }
 
@@ -38,7 +41,8 @@ public class Domeincontroller {
     }
 
     public void geefVolgendWoord() {
-        currentWoord = woordenRepo.geefVolgendWoord().toUpperCase();
+        currentWoordObject = woordenRepo.geefVolgendWoord();
+        currentWoord = currentWoordObject.getWoord().toUpperCase();
         hangmanWoord = new char[currentWoord.length()];
         Arrays.fill(hangmanWoord, '_');
         beurten = 0;
@@ -85,5 +89,9 @@ public class Domeincontroller {
                 return 0;
             }
         }
+    }
+    
+    public void voegWoordToe(String woord, String definitie, String vertaling){
+        woordenRepo.voegWoordToe(woord, definitie, vertaling);
     }
 }

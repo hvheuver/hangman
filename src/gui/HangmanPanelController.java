@@ -10,11 +10,18 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -22,10 +29,10 @@ import javafx.scene.layout.GridPane;
  * @author UGent
  */
 public class HangmanPanelController extends GridPane {
+
     private Domeincontroller domeincontroller;
-    
-    @FXML
-    private FlowPane buttonContainer;
+
+    private GridPane buttonContainer;
     @FXML
     private Label scoreLabel;
     @FXML
@@ -36,38 +43,53 @@ public class HangmanPanelController extends GridPane {
     private ImageView hangmanImageView;
     @FXML
     private Label hangmanLabel;
+    @FXML
+    private StackPane buttonOuterContainer;
 
     public HangmanPanelController(Domeincontroller domeincontroller) {
-         FXMLLoader loader
+        FXMLLoader loader
                 = new FXMLLoader(getClass().getResource("HangmanPanel.fxml"));
         loader.setRoot(this);
         loader.setController(this);
-        try
-        {
+        try {
             loader.load();
             this.domeincontroller = domeincontroller;
-            generateButtons();
             startGame();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    private void generateButtons(){
+    private void generateButtons() {
+        buttonContainer = new GridPane();
         char[] chars = new char[]{
-            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
-        for(char c : chars){
-            Button b = new Button(""+c);
+        //26 letters -> 13 buttons per rij
+        int row = 0;
+        int col = 0;
+        for (char c : chars) {
+            Button b = new Button("" + c);
+            b.setPadding(new Insets(10, 20, 10, 20));
             b.setOnAction((ActionEvent event) -> {
-                String eventChar = ((Button)event.getSource()).getText();
+                String eventChar = ((Button) event.getSource()).getText();
                 processAction(eventChar);
                 ((Button) event.getSource()).setDisable(true);
             });
-            buttonContainer.getChildren().add(b);
+            buttonContainer.add(b, col, row);
+            GridPane.setMargin(b, new Insets(5, 5, 5, 5));
+            if (col == 12) {
+                col = 0;
+                row++;
+            } else {
+                col++;
+            }
         }
+        buttonContainer.setAlignment(Pos.CENTER);
+        buttonContainer.autosize();
+        buttonOuterContainer.getChildren().add(buttonContainer);
     }
-    
+
     @FXML
     private void toonOplossing(ActionEvent event) {
     }
@@ -79,14 +101,14 @@ public class HangmanPanelController extends GridPane {
 
     private void processAction(String stringchar) {
         boolean isvalid = domeincontroller.checkChar(stringchar);
-        if(isvalid){
+        if (isvalid) {
             hangmanLabel.setText(domeincontroller.geefHangmanWoord(stringchar));
-        } else{
+        } else {
             //update image hangman
             System.out.println("Wrong! Hangman update");
         }
-        switch(domeincontroller.checkWinOfVerlies()){
-            case 1 : {
+        switch (domeincontroller.checkWinOfVerlies()) {
+            case 1: {
                 endgame(true);
                 break;
             }
@@ -95,29 +117,23 @@ public class HangmanPanelController extends GridPane {
                 break;
             }
         }
-        /*
-        // dubbele code
-        Button gekozen = buttonContainer.getChildren()
-                .stream()
-                .map(m -> (Button) m)
-                .filter(b -> b.getText().equals(stringchar))
-                .findFirst()
-                .get();
-        //disable gekozen knop
-        gekozen.setDisable(true);
-        */
     }
 
     private void startGame() {
         domeincontroller.geefVolgendWoord();
+        //remove and generate
+        if (!buttonOuterContainer.getChildren().isEmpty()) {
+            buttonOuterContainer.getChildren().removeAll(buttonOuterContainer.getChildren());
+        }
+        generateButtons();
         hangmanLabel.setText(domeincontroller.geefHangmanWoord());
     }
-    
-    private void endgame(boolean win){
+
+    private void endgame(boolean win) {
         Label label;
-        if(win){
+        if (win) {
             label = new Label("Win!");
-        } else{
+        } else {
             label = new Label("Lost!");
         }
         buttonContainer.getChildren().setAll(label);

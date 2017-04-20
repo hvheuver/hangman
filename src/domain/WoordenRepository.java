@@ -17,8 +17,8 @@ import javafx.collections.ObservableList;
  * @author UGent
  */
 public class WoordenRepository {
-    private List<String> woorden;
-    private List<String> gebruikteWoorden;
+    private List<Woord> woorden;
+    private List<Woord> gebruikteWoorden;
     private final Random randomGenerator;
     
     public WoordenRepository() {
@@ -29,27 +29,27 @@ public class WoordenRepository {
 
     private void generateStandaardList() {
         woorden = new ArrayList<>(
-            Arrays.asList(new String[]{
-                "voiture",
-                "armoire",
-                "difficile",
-                "toujours",
-                "ligne",
-                "remercier"
+            Arrays.asList(new Woord[]{
+                new Woord("voiture", "brumbrum", "auto"),
+                new Woord("armoire", "definitie", "vertaling"),
+                new Woord("difficile", "definitie", "vertaling"),
+                new Woord("toujours", "definitie", "vertaling"),
+                new Woord("ligne", "definitie", "vertaling"),
+                new Woord("remercier", "definitie", "vertaling")
             })
         );
     }
     
-    public ObservableList<String> getWoorden(){
+    public ObservableList<Woord> getWoorden(){
         return FXCollections.observableArrayList(woorden);
     }
     
-    public String geefVolgendWoord(){
+    public Woord geefVolgendWoord(){
         if(woorden.isEmpty()){
             throw new ArrayIndexOutOfBoundsException("Woordenlijst is leeg.");
         }
         int index = randomGenerator.nextInt(woorden.size());
-        String gekozen =  woorden.remove(index);
+        Woord gekozen =  woorden.remove(index);
         gebruikteWoorden.add(gekozen);
         return gekozen;
     }
@@ -58,11 +58,11 @@ public class WoordenRepository {
         woorden.addAll(gebruikteWoorden);
     }
     
-    public void voegWoordToe(String s){
-        woorden.add(s);
+    public void voegWoordToe(String woord, String definitie, String vertaling){
+        woorden.add(new Woord(woord, definitie, vertaling));
     }
     
-    public void verwijderWoord(String s){
-        woorden.remove(s);
+    public void verwijderWoord(Woord w){
+        woorden.remove(w);
     }
 }
