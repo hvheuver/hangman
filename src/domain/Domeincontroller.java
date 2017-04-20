@@ -49,7 +49,7 @@ public class Domeincontroller {
     }
 
     public String geefVolledigWoord() {
-        return currentWoord;
+        return currentWoord.toLowerCase();
     }
 
     private String woordNaarHangmanWoord() {
@@ -93,5 +93,13 @@ public class Domeincontroller {
     
     public void voegWoordToe(String woord, String definitie, String vertaling){
         woordenRepo.voegWoordToe(woord, definitie, vertaling);
+    }
+
+    public String geefVertaling() {
+        return currentWoordObject.getVertaling();
+    }
+
+    public String geefDefinitie() {
+        return currentWoordObject.getDefinitie();
     }
 }

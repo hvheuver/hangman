@@ -22,6 +22,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * FXML Controller class
@@ -45,6 +46,8 @@ public class HangmanPanelController extends GridPane {
     private Label hangmanLabel;
     @FXML
     private StackPane buttonOuterContainer;
+    @FXML
+    private Label vertalingLabel;
 
     public HangmanPanelController(Domeincontroller domeincontroller) {
         FXMLLoader loader
@@ -76,6 +79,8 @@ public class HangmanPanelController extends GridPane {
                 processAction(eventChar);
                 ((Button) event.getSource()).setDisable(true);
             });
+            b.setStyle("-fx-focus-color: transparent;"
+                    + "-fx-faint-focus-color: transparent;");
             buttonContainer.add(b, col, row);
             GridPane.setMargin(b, new Insets(5, 5, 5, 5));
             if (col == 12) {
@@ -92,6 +97,7 @@ public class HangmanPanelController extends GridPane {
 
     @FXML
     private void toonOplossing(ActionEvent event) {
+        endgame(false);
     }
 
     @FXML
@@ -122,6 +128,9 @@ public class HangmanPanelController extends GridPane {
     private void startGame() {
         domeincontroller.geefVolgendWoord();
         //remove and generate
+        updateVertaling("");
+        updateWoord("");
+        updateDefinitie("");
         if (!buttonOuterContainer.getChildren().isEmpty()) {
             buttonOuterContainer.getChildren().removeAll(buttonOuterContainer.getChildren());
         }
@@ -135,7 +144,29 @@ public class HangmanPanelController extends GridPane {
             label = new Label("Win!");
         } else {
             label = new Label("Lost!");
+            //TODO: score berekenen en updaten
+            updateScore(0);
         }
+        updateVertaling(domeincontroller.geefVertaling());
+        updateWoord(domeincontroller.geefVolledigWoord());
+        updateDefinitie(domeincontroller.geefDefinitie());
+        label.setFont(new Font(30));
         buttonContainer.getChildren().setAll(label);
+    }
+
+    private void updateScore(int score) {
+        scoreLabel.setText("Score: " + score);
+    }
+
+    private void updateWoord(String woord) {
+        woordLabel.setText("Mot: " + woord);
+    }
+
+    private void updateDefinitie(String definitie) {
+        definitionLabel.setText("Definition: " + definitie);
+    }
+
+    private void updateVertaling(String vertaling) {
+        vertalingLabel.setText("Traduction: " + vertaling);
     }
 }
