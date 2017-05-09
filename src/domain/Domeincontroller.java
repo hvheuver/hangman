@@ -20,12 +20,14 @@ public class Domeincontroller {
     private char[] hangmanWoord;
     private int beurten;
     private final int MAX_BEURTEN;
+    private int score;
     
     //geen echte domeincontroller but whatever.
     public Domeincontroller() {
         woordenRepo = new WoordenRepository();
         beurten = 0;
         MAX_BEURTEN = 7; //aanpassen aan aantal images
+        score = 0;
     }
 
     public ObservableList<Woord> getWoorden() {
@@ -102,10 +104,13 @@ public class Domeincontroller {
     public String geefDefinitie() {
         return currentWoordObject.getDefinitie();
     }
-
+    
     public int getScore() {
-        //todo
-        return 0;
+        return score;
+    }
+    
+    public void addScore(int score) {
+        this.score += score;
     }
 
     public int getMaxScore() {
