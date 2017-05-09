@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -38,6 +39,7 @@ import javafx.stage.Stage;
 public class HangmanPanelController extends GridPane {
 
     private Domeincontroller domeincontroller;
+    private int imgcounter;
 
     private GridPane buttonContainer;
     @FXML
@@ -121,7 +123,8 @@ public class HangmanPanelController extends GridPane {
         if (isvalid) {
             hangmanLabel.setText(domeincontroller.geefHangmanWoord(stringchar));
         } else {
-            //update image hangman
+            imgcounter++;
+            updateimg();
             System.out.println("Wrong! Hangman update");
         }
         switch (domeincontroller.checkWinOfVerlies()) {
@@ -211,6 +214,11 @@ public class HangmanPanelController extends GridPane {
             updateVertaling(domeincontroller.geefVertaling());
             vertalingBericht.setText("La traduction n'est pas correcte!");
         }
+    }
+
+    private void updateimg() {
+        String path = "/resources/"+imgcounter+".png";
+        hangmanImageView.setImage(new Image(path));
     }
 
 }
