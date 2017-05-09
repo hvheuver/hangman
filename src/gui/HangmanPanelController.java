@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -53,7 +54,12 @@ public class HangmanPanelController extends GridPane {
     private StackPane buttonOuterContainer;
     @FXML
     private Label vertalingLabel;
-
+    
+    @FXML
+    private TextField vertalingText;
+    @FXML
+    private Label vertalingBericht;
+    
     public HangmanPanelController(Domeincontroller domeincontroller) {
         FXMLLoader loader
                 = new FXMLLoader(getClass().getResource("HangmanPanel.fxml"));
@@ -140,6 +146,8 @@ public class HangmanPanelController extends GridPane {
         updateVertaling("");
         updateWoord("");
         updateDefinitie("");
+        vertalingBericht.setText("");
+        vertalingText.setText("");
         if (!buttonOuterContainer.getChildren().isEmpty()) {
             buttonOuterContainer.getChildren().removeAll(buttonOuterContainer.getChildren());
         }
@@ -154,9 +162,9 @@ public class HangmanPanelController extends GridPane {
         } else {
             label = new Label("Lost!");
             //TODO: score berekenen en updaten
-            updateScore(0);
+            updateScore(domeincontroller.getScore());
         }
-        updateVertaling(domeincontroller.geefVertaling());
+//        updateVertaling(domeincontroller.geefVertaling());
         updateWoord(domeincontroller.geefVolledigWoord());
         updateDefinitie(domeincontroller.geefDefinitie());
         label.setFont(new Font(30));
@@ -189,4 +197,20 @@ public class HangmanPanelController extends GridPane {
         Stage s = (Stage) this.getScene().getWindow();
         s.setScene(new Scene(new LandingPaneController(domeincontroller)));
     }
+    
+    
+    @FXML
+    private void vertaalWoord(ActionEvent event) {
+        String ver = vertalingText.getText();
+        if (ver.toLowerCase().equals(domeincontroller.geefVertaling().toLowerCase())) {
+            domeincontroller.addScore(2);
+            updateVertaling(domeincontroller.geefVertaling());
+            vertalingBericht.setText("La traduction est correcte!");
+            System.out.println();
+        } else {
+            updateVertaling(domeincontroller.geefVertaling());
+            vertalingBericht.setText("La traduction n'est pas correcte!");
+        }
+    }
+
 }
