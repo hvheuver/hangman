@@ -30,12 +30,12 @@ public class WoordenRepository {
     private void generateStandaardList() {
         woorden = new ArrayList<>(
             Arrays.asList(new Woord[]{
-                new Woord("voiture", "brumbrum", "auto"),
-                new Woord("armoire", "definitie", "vertaling"),
-                new Woord("difficile", "definitie", "vertaling"),
-                new Woord("toujours", "definitie", "vertaling"),
-                new Woord("ligne", "definitie", "vertaling"),
-                new Woord("remercier", "definitie", "vertaling")
+                new Woord("adroit", "qui se conduit, qui opère avec habileté, subtilité", "behendig"),
+                new Woord("armoire", "meuble de rangement à étagères fermé par une ou des portes", "kast"),
+                new Woord("difficile", "compliqué, ne pouvant être compris facilement", "moeilijk"),
+                new Woord("toujours", "tout le temps, sans cesse", "altijd"),
+                new Woord("ligne", "figure matérialisée par un fil fin", "lijn"),
+                new Woord("remercier", "exprimer sa gratitude, dire merci", "bedanken")
             })
         );
     }
