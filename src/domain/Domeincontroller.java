@@ -114,7 +114,7 @@ public class Domeincontroller {
     }
 
     public int getMaxScore() {
-        return woordenRepo.getWoorden().size()*2;
+        return (woordenRepo.getWoorden().size()*2)+woordenRepo.getWoorden().size();
     }
 
     public void resetGame() {

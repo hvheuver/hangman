@@ -64,6 +64,11 @@ public class HangmanPanelController extends GridPane {
     @FXML
     private Button translateButton;
     
+    int aantalWoorden;
+    int doneWoorden;
+    @FXML
+    private Label compteurLabel;
+    
     public HangmanPanelController(Domeincontroller domeincontroller) {
         FXMLLoader loader
                 = new FXMLLoader(getClass().getResource("HangmanPanel.fxml"));
@@ -72,6 +77,7 @@ public class HangmanPanelController extends GridPane {
         try {
             loader.load();
             this.domeincontroller = domeincontroller;
+            aantalWoorden = domeincontroller.getWoorden().size();
             startGame();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -121,6 +127,8 @@ public class HangmanPanelController extends GridPane {
     private void gaNaarVolgendWoord(ActionEvent event) {
         imgcounter = 0;
         hangmanImageView.setImage(null);
+        doneWoorden++;
+        compteurLabel.setText("Compteur: "+doneWoorden+"/"+aantalWoorden);
         startGame();
         translateButton.setDisable(false);
     }
@@ -136,12 +144,14 @@ public class HangmanPanelController extends GridPane {
         }
         switch (domeincontroller.checkWinOfVerlies()) {
             case 1: {
+                domeincontroller.addScore(1);
                 endgame(true);
                 break;
             }
             case 2: {
                 endgame(false);
                 translateButton.setDisable(true);
+                updateVertaling(domeincontroller.geefVertaling());
                 break;
             }
         }
@@ -199,7 +209,7 @@ public class HangmanPanelController extends GridPane {
     private void toonEindscherm() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Oei de woordjes zijn op.");
-        alert.setContentText("Uw eindscore is " + domeincontroller.getScore() + " van de maximale " + domeincontroller.getMaxScore());
+        alert.setContentText("Uw eindscore is " + domeincontroller.getScore() + " van de maximale " + ((aantalWoorden*2)+aantalWoorden));
         alert.showAndWait();
         //back to landing
         domeincontroller.resetGame();
