@@ -114,6 +114,7 @@ public class HangmanPanelController extends GridPane {
     private void toonOplossing(ActionEvent event) {
         hangmanImageView.setImage(new Image("/resources/8.png"));
         endgame(false);
+        translateButton.setDisable(true);
     }
 
     @FXML
@@ -140,6 +141,7 @@ public class HangmanPanelController extends GridPane {
             }
             case 2: {
                 endgame(false);
+                translateButton.setDisable(true);
                 break;
             }
         }
@@ -167,13 +169,11 @@ public class HangmanPanelController extends GridPane {
     private void endgame(boolean win) {
         Label label;
         if (win) {
-            label = new Label("Win!");
+            label = new Label("Tu as gagné!");
         } else {
-            label = new Label("Lost!");
-            //TODO: score berekenen en updaten
-            updateScore(domeincontroller.getScore());
+            label = new Label("Dommage, tu as perdu!");
         }
-//        updateVertaling(domeincontroller.geefVertaling());
+        updateScore(domeincontroller.getScore());
         updateWoord(domeincontroller.geefVolledigWoord());
         updateDefinitie(domeincontroller.geefDefinitie());
         label.setFont(new Font(30));
@@ -215,6 +215,7 @@ public class HangmanPanelController extends GridPane {
             domeincontroller.addScore(2);
             updateVertaling(domeincontroller.geefVertaling());
             vertalingBericht.setText("La traduction est correcte!");
+            endgame(true);
         } else{
             updateVertaling(domeincontroller.geefVertaling());
             vertalingBericht.setText("La traduction n'est pas correcte!");
@@ -225,6 +226,12 @@ public class HangmanPanelController extends GridPane {
     private void updateimg() {
         String path = "/resources/"+imgcounter+".png";
         hangmanImageView.setImage(new Image(path));
+    }
+
+    @FXML
+    private void terugNaarLanding(ActionEvent event) {
+        Stage s = (Stage) this.getScene().getWindow();
+        s.setScene(new Scene(new LandingPaneController(domeincontroller)));
     }
 
 }

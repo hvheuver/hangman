@@ -35,7 +35,20 @@ public class WoordenRepository {
                 new Woord("difficile", "compliqué, ne pouvant être compris facilement", "moeilijk"),
                 new Woord("toujours", "tout le temps, sans cesse", "altijd"),
                 new Woord("ligne", "figure matérialisée par un fil fin", "lijn"),
-                new Woord("remercier", "exprimer sa gratitude, dire merci", "bedanken")
+                new Woord("remercier", "exprimer sa gratitude, dire merci", "bedanken"),
+                new Woord("cybermonde", "L’univers virtuel d’Internet et des réseaux informatiques.", "cyberspace"),
+                new Woord("interface", "Élément formant la liaison entre deux systèmes on deux entités.", "verbinding"),    
+                new Woord("formatage", "Opération permettant de préparer un disque à l’emploi.", "formatteren"),
+                new Woord("serveur", "Ordinateur fonctionnant au service d’un réseau, outil d’un service organisant la diffusion.", "server"),
+                new Woord("bloquer", "Ils cessent de marcher.", "blokkeren"),
+                new Woord("shareware", "Logiciel pouvant être utilisé gratuitement pendant une certaine période et que l’on doit ensuite acheter.", "proefversie"),
+                new Woord("clone", "Offre les mêmes fonctionnalités que l’original dont il s’inspire.", "kloon"),
+                new Woord("fichier", "Un ensemble d’informations enregistrées sur un disque contenant des données ou un programme.", "bestand"),
+                new Woord("identificateur", "Nom utilisé pour se connecter à l’Internet et récupérer son courrier électronique.", "login"),
+                new Woord("signet", "Une sorte de marque-page automatique qui permet de retrouver un site Internet déjà visité.", "bookmark"),
+                new Woord("pirate", "Pirate qui s’introduit illégalement dans les systèmes informatiques.", "hacker"),
+                new Woord("questionnaire", "Une liste de questions.", "vragenlijst"),
+                new Woord("souris", "Objet qui sert à se déplacer sur l’écran d’un ordinateur.", "muis")
             })
         );
     }
