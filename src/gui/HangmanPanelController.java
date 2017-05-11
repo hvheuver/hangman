@@ -61,6 +61,8 @@ public class HangmanPanelController extends GridPane {
     private TextField vertalingText;
     @FXML
     private Label vertalingBericht;
+    @FXML
+    private Button translateButton;
     
     public HangmanPanelController(Domeincontroller domeincontroller) {
         FXMLLoader loader
@@ -110,12 +112,16 @@ public class HangmanPanelController extends GridPane {
 
     @FXML
     private void toonOplossing(ActionEvent event) {
+        hangmanImageView.setImage(new Image("/resources/8.png"));
         endgame(false);
     }
 
     @FXML
     private void gaNaarVolgendWoord(ActionEvent event) {
+        imgcounter = 0;
+        hangmanImageView.setImage(null);
         startGame();
+        translateButton.setDisable(false);
     }
 
     private void processAction(String stringchar) {
@@ -209,11 +215,11 @@ public class HangmanPanelController extends GridPane {
             domeincontroller.addScore(2);
             updateVertaling(domeincontroller.geefVertaling());
             vertalingBericht.setText("La traduction est correcte!");
-            System.out.println();
-        } else {
+        } else{
             updateVertaling(domeincontroller.geefVertaling());
             vertalingBericht.setText("La traduction n'est pas correcte!");
         }
+        translateButton.setDisable(true);
     }
 
     private void updateimg() {

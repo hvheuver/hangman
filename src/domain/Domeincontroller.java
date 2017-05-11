@@ -26,7 +26,7 @@ public class Domeincontroller {
     public Domeincontroller() {
         woordenRepo = new WoordenRepository();
         beurten = 0;
-        MAX_BEURTEN = 7; //aanpassen aan aantal images
+        MAX_BEURTEN = 8; //aanpassen aan aantal images
         score = 0;
     }
 
