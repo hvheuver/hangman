@@ -120,6 +120,7 @@ public class HangmanPanelController extends GridPane {
     private void toonOplossing(ActionEvent event) {
         hangmanImageView.setImage(new Image("/resources/8.png"));
         endgame(false);
+        updateVertaling(domeincontroller.geefVertaling());
         translateButton.setDisable(true);
     }
 
@@ -150,8 +151,8 @@ public class HangmanPanelController extends GridPane {
             }
             case 2: {
                 endgame(false);
-                translateButton.setDisable(true);
-                updateVertaling(domeincontroller.geefVertaling());
+                //translateButton.setDisable(true);
+                //updateVertaling(domeincontroller.geefVertaling());
                 break;
             }
         }
@@ -191,7 +192,7 @@ public class HangmanPanelController extends GridPane {
     }
 
     private void updateScore(int score) {
-        scoreLabel.setText("Score: " + score);
+        scoreLabel.setText("Résultat: " + score);
     }
 
     private void updateWoord(String woord) {
